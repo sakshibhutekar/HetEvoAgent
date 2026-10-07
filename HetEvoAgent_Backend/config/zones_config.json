@@ -1,0 +1,46 @@
+{
+  "zones": [
+    {
+      "zone_id": "Z1",
+      "zone_name": "Chikalthana MIDC",
+      "zone_type": "Industrial",
+      "latitude": 19.864981,
+      "longitude": 75.411001
+    },
+    {
+      "zone_id": "Z2",
+      "zone_name": "Waluj / More Chowk",
+      "zone_type": "Industrial + Urban",
+      "latitude": 19.84093,
+      "longitude": 75.24189
+    },
+    {
+      "zone_id": "Z3",
+      "zone_name": "Gulmandi / Central City",
+      "zone_type": "Commercial",
+      "latitude": 19.885817,
+      "longitude": 75.331858
+    },
+    {
+      "zone_id": "Z4",
+      "zone_name": "CIDCO",
+      "zone_type": "Residential + Urban",
+      "latitude": 19.892808,
+      "longitude": 75.363114
+    },
+    {
+      "zone_id": "Z5",
+      "zone_name": "Shendra",
+      "zone_type": "Industrial + Developing",
+      "latitude": 19.873282,
+      "longitude": 75.491805
+    },
+    {
+      "zone_id": "Z6",
+      "zone_name": "Deolai",
+      "zone_type": "Peripheral Residential",
+      "latitude": 19.842209,
+      "longitude": 75.365579
+    }
+  ]
+}
