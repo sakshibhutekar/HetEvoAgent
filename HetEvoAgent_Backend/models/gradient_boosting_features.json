@@ -1,0 +1,23 @@
+[
+    "T2M",
+    "T2M_MAX",
+    "T2M_MIN",
+    "RH2M",
+    "WS10M",
+    "WD10M",
+    "PRECTOTCORR",
+    "PS",
+    "T2MDEW",
+    "year",
+    "month",
+    "day",
+    "day_of_week",
+    "day_of_year",
+    "month_sin",
+    "month_cos",
+    "day_of_year_sin",
+    "day_of_year_cos",
+    "latitude",
+    "longitude",
+    "distance_km"
+]

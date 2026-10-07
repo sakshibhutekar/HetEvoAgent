@@ -1,0 +1,8 @@
+{
+    "model": "GradientBoostingRegressor",
+    "MAE": 26.301,
+    "RMSE": 34.991,
+    "R2": 0.115,
+    "training_records": 3446,
+    "testing_records": 1993
+}
