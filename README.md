@@ -176,20 +176,20 @@ The preprocessing stage performs operations such as:
 
 Weather data is transformed into a structured dataset containing:
 
-date
-zone
-zone_type
-latitude
-longitude
-T2M
-T2M_MAX
-T2M_MIN
-RH2M
-WS10M
-WD10M
-PRECTOTCORR
-PS
-T2MDEW
+- `date`
+- `zone`
+- `zone_type`
+- `latitude`
+- `longitude`
+- `T2M`
+- `T2M_MAX`
+- `T2M_MIN`
+- `RH2M`
+- `WS10M`
+- `WD10M`
+- `PRECTOTCORR`
+- `PS`
+- `T2MDEW`
 
 ---
 
@@ -263,7 +263,9 @@ The model predicts AQI as a continuous numerical value using the 21 engineered f
 The serialized model is stored as:
 
 models/
+```text
 └── gradient_boosting_aqi_model.pkl
+```
 
 The backend loads this model through the model service and uses it during prediction requests.
 
@@ -375,14 +377,14 @@ When a requested date is not available from the latest atmospheric dataset, the 
 
 # Data Integration Pipeline
 
-Data Collection — Ground AQI, weather, and satellite data
-Data Alignment — Align datasets by date and location
-Station Matching — Match AQI observations with corresponding stations
-Geographic Mapping — Map data to the six prediction zones
-Feature Engineering — Generate relevant environmental features
-Feature Preparation — Prepare 21 model features
-AQI Prediction — Apply the Gradient Boosting model
-Output — Generate zone-wise predicted AQI
+1. **Data Collection** — Ground AQI, weather, and satellite data
+2. **Data Alignment** — Align datasets by date and location
+3. **Station Matching** — Match AQI observations with corresponding stations
+4. **Geographic Mapping** — Map data to the six prediction zones
+5. **Feature Engineering** — Generate relevant environmental features
+6. **Feature Preparation** — Prepare 21 model features
+7. **AQI Prediction** — Apply the Gradient Boosting model
+8. **Output** — Generate zone-wise predicted AQI
 ---
 
 # Agent-Based Self-Evolution
@@ -430,7 +432,9 @@ The purpose of this architecture is to maintain feedback about prediction perfor
 
 The backend contains dedicated modules for the agent-based architecture.
 
+```text
 agent/
+```text
 ├── agent.py
 ├── agent_memory.py
 ├── evaluator.py
@@ -441,6 +445,7 @@ agent/
 ├── run_agent.py
 ├── strategy.py
 └── __init__.py
+```
 
 ### Agent
 
@@ -549,9 +554,10 @@ The FastAPI backend exposes APIs under the /api/v1/ structure.
 
 Important backend modules include:
 
+```text
 app/
+```text
 ├── main.py
-│
 ├── api/
 │   └── routes/
 │       ├── analytics.py
@@ -559,17 +565,14 @@ app/
 │       ├── predictions.py
 │       ├── weather.py
 │       └── zones.py
-│
 ├── integrations/
 │   ├── api_collector.py
 │   ├── era5_collector.py
 │   └── sentinel5p_collector.py
-│
 ├── schemas/
 │   ├── prediction.py
 │   ├── weather.py
 │   └── zone.py
-│
 ├── services/
 │   ├── data_service.py
 │   ├── firebase_service.py
@@ -577,12 +580,12 @@ app/
 │   ├── prediction_service.py
 │   ├── weather_service.py
 │   └── zone_service.py
-│
 └── utils/
     ├── aqi_utils.py
     ├── feature_engineering.py
     ├── geo_utils.py
     └── weather_adapter.py
+```
 
 ---
 
@@ -590,14 +593,16 @@ app/
 
 The prediction endpoint is:
 
-POST /api/v1/predictions/predict
+POST `/api/v1/predictions/predict`
 
 Example request:
 
+```json
 {
     "zone_name": "Chikalthana MIDC",
     "date": "2026-09-27"
 }
+```
 
 The backend then:
 
@@ -616,7 +621,7 @@ The backend then:
 
 The frontend communicates with:
 
-GET /api/v1/zones/
+GET `/api/v1/zones/`
 
 This endpoint provides the configured prediction zones.
 
@@ -634,7 +639,7 @@ longitude
 
 The backend provides a health endpoint:
 
-GET /health
+GET `/health`
 
 This can be used to verify whether the FastAPI backend is running.
 
@@ -706,14 +711,13 @@ This makes it easier to identify:
 
 # Project Structure
 
+```text
 HetEvoAgent/
-│
+```text
 ├── README.md
 ├── .gitignore
 ├── LICENSE
-│
 ├── HetEvoAgent_Backend/
-│   │
 │   ├── agent/
 │   │   ├── agent.py
 │   │   ├── agent_memory.py
@@ -724,37 +728,27 @@ HetEvoAgent/
 │   │   ├── reward.py
 │   │   ├── run_agent.py
 │   │   └── strategy.py
-│   │
 │   ├── app/
 │   │   ├── api/
 │   │   ├── integrations/
 │   │   ├── schemas/
 │   │   ├── services/
 │   │   └── utils/
-│   │
 │   ├── config/
 │   │   └── zones_config.json
-│   │
 │   ├── firebase/
-│   │
 │   ├── models/
 │   │   └── gradient_boosting_aqi_model.pkl
-│   │
 │   ├── predictions/
-│   │
 │   ├── scripts/
 │   │   ├── generate_predictions.py
 │   │   ├── prepare_data.py
 │   │   ├── test_model.py
 │   │   └── validate_data.py
-│   │
 │   ├── tests/
-│   │
 │   ├── requirements.txt
 │   └── run.py
-│
 ├── HetEvoAgent_Frontend/
-│   │
 │   ├── app/
 │   ├── components/
 │   ├── lib/
@@ -764,12 +758,12 @@ HetEvoAgent/
 │   ├── next.config.mjs
 │   ├── tailwind.config.js
 │   └── tsconfig.json
-│
 └── docs/
+```
 
 ---
 
-# ️ Technology Stack
+# Technology Stack
 
 ## Backend
 
@@ -810,6 +804,7 @@ Sensitive credentials must never be committed to GitHub.
 
 Backend environment variables include:
 
+```env
 CPCB_API_KEY=
 OPENWEATHER_API_KEY=
 COPERNICUS_CLIENT_ID=
@@ -817,6 +812,7 @@ COPERNICUS_CLIENT_SECRET=
 ERA5_API_KEY=
 CDSE_CLIENT_ID=
 CDSE_CLIENT_SECRET=
+```
 
 Create the required .env file locally.
 
@@ -853,8 +849,10 @@ Python 3.11 is recommended for the current backend environment.
 
 ## 2. Clone the Repository
 
+```bash
 git clone <YOUR_GITHUB_REPOSITORY_URL>
 cd HetEvoAgent
+```
 
 ---
 
@@ -864,15 +862,21 @@ cd HetEvoAgent_Backend
 
 Create a Python 3.11 virtual environment:
 
+```bash
 py -3.11 -m venv venv
+```
 
 Activate it:
 
+```bash
 .\venv\Scripts\Activate.ps1
+```
 
 Verify Python:
 
+```bash
 python --version
+```
 
 Expected:
 
@@ -882,8 +886,10 @@ Python 3.11.x
 
 ## 4. Install Backend Dependencies
 
+```bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+```
 
 ---
 
@@ -895,6 +901,7 @@ HetEvoAgent_Backend/.env
 
 Add the required credentials:
 
+```env
 CPCB_API_KEY=
 OPENWEATHER_API_KEY=
 COPERNICUS_CLIENT_ID=
@@ -902,6 +909,7 @@ COPERNICUS_CLIENT_SECRET=
 ERA5_API_KEY=
 CDSE_CLIENT_ID=
 CDSE_CLIENT_SECRET=
+```
 
 Use the actual values only on your local machine.
 
@@ -921,15 +929,17 @@ The backend uses Firebase Admin functionality to communicate with Firestore.
 
 From HetEvoAgent_Backend:
 
+```bash
 python -m uvicorn app.main:app --reload
+```
 
 The backend should be available at:
 
-http://127.0.0.1:8000
+`http://127.0.0.1:8000`
 
 FastAPI documentation:
 
-http://127.0.0.1:8000/docs
+`http://127.0.0.1:8000`/docs
 
 ---
 
@@ -937,7 +947,7 @@ http://127.0.0.1:8000/docs
 
 Open:
 
-http://127.0.0.1:8000/health
+`http://127.0.0.1:8000``/health`
 
 ---
 
@@ -949,7 +959,9 @@ cd HetEvoAgent_Frontend
 
 Install dependencies:
 
+```bash
 npm install
+```
 
 ---
 
@@ -959,13 +971,17 @@ Create the required local environment file.
 
 Example:
 
-NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
+```env
+NEXT_PUBLIC_API_URL=`http://127.0.0.1:8000`
+```
 
 ---
 
 ## 11. Run the Frontend
 
+```bash
 npm run dev
+```
 
 Open the frontend URL shown by Next.js.
 
@@ -975,7 +991,7 @@ Open the frontend URL shown by Next.js.
 
 1. User selects Zone and Prediction Date
 2. Frontend
-3. POST /api/v1/predictions/predict
+3. POST `/api/v1/predictions/predict`
 4. FastAPI
 5. Prediction Service
 6. Weather / Environmental Data
@@ -1010,27 +1026,27 @@ Open the frontend URL shown by Next.js.
 
 The current trained Gradient Boosting model uses exactly these 21 inputs:
 
-T2M
-T2M_MAX
-T2M_MIN
-RH2M
-WS10M
-WD10M
-PRECTOTCORR
-PS
-T2MDEW
-year
-month
-day
-day_of_week
-day_of_year
-month_sin
-month_cos
-day_of_year_sin
-day_of_year_cos
-latitude
-longitude
-distance_km
+- `T2M`
+- `T2M_MAX`
+- `T2M_MIN`
+- `RH2M`
+- `WS10M`
+- `WD10M`
+- `PRECTOTCORR`
+- `PS`
+- `T2MDEW`
+- `year`
+- `month`
+- `day`
+- `day_of_week`
+- `day_of_year`
+- `month_sin`
+- `month_cos`
+- `day_of_year_sin`
+- `day_of_year_cos`
+- `latitude`
+- `longitude`
+- `distance_km`
 
 This list should remain synchronized between:
 
@@ -1113,19 +1129,21 @@ This separation keeps the frontend presentation layer independent from backend p
 
 ---
 
-# ️ Data Persistence
+#  Data Persistence
 
 The system uses Firebase Firestore to maintain persistent information.
 
 A conceptual Firestore structure can include:
 
 Firestore
+```text
 │
 ├── zones
 ├── predictions
 ├── actual_data
 ├── raw_data
 └── self_evolution_logs
+```
 
 The exact collection structure can evolve as the backend implementation develops.
 
@@ -1375,9 +1393,11 @@ Credentials should always be stored through environment variables or secure secr
 
 Example:
 
+```env
 CPCB_API_KEY=your_key
 ERA5_API_KEY=your_key
 COPERNICUS_CLIENT_SECRET=your_secret
+```
 
 The values above are examples only.
 
@@ -1389,7 +1409,9 @@ Actual credentials must remain outside version control.
 
 Recommended documentation structure:
 
+```text
 docs/
+```text
 │
 ├── architecture/
 │   ├── high-level-architecture.md
@@ -1407,6 +1429,7 @@ docs/
 │
 └── agent/
     └── self-evolution.md
+```
 
 The README provides the high-level technical overview, while detailed documents can explain individual components.
 
@@ -1418,15 +1441,21 @@ The README provides the high-level technical overview, while detailed documents 
 
 cd HetEvoAgent_Backend
 
+```bash
 py -3.11 -m venv venv
+```
 
+```bash
 .\venv\Scripts\Activate.ps1
+```
 
 python -m pip install --upgrade pip
 
 python -m pip install -r requirements.txt
 
+```bash
 python -m uvicorn app.main:app --reload
+```
 
 ## Frontend
 
@@ -1434,9 +1463,13 @@ Open another terminal:
 
 cd HetEvoAgent_Frontend
 
+```bash
 npm install
+```
 
+```bash
 npm run dev
+```
 
 Then open the frontend URL shown by Next.js.
 
