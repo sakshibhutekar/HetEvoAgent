@@ -125,35 +125,23 @@ Firebase Firestore is integrated with the backend for storing prediction informa
 
 The overall system can be represented as:
 
-Environmental Data
-        ↓
-Data Collection
-        ↓
-Data Preprocessing
-        ↓
-Feature Engineering
-        ↓
-21 Model Features
-        ↓
-Gradient Boosting AQI Prediction
-        ↓
-Agent Evaluation
-        ↓
-Reward / Penalty
-        ↓
-Learning / Strategy / Memory
-        ↓
-Firebase Firestore
-        ↓
-FastAPI Backend
-        ↓
-React / Next.js Frontend
-        ↓
-Live AQI / Predictions / Heatmaps / Insights
+1. Environmental Data
+2. Data Collection
+3. Data Preprocessing
+4. Feature Engineering
+5. 21 Model Features
+6. Gradient Boosting AQI Prediction
+7. Agent Evaluation
+8. Reward / Penalty
+9. Learning / Strategy / Memory
+10. Firebase Firestore
+11. FastAPI Backend
+12. React / Next.js Frontend
+13. Live AQI / Predictions / Heatmaps / Insights
 
 ---
 
-#  How HetEvoAgent Works
+# How HetEvoAgent Works
 
 ## 1. Data Collection
 
@@ -205,7 +193,7 @@ T2MDEW
 
 ---
 
-#  Feature Engineering
+# Feature Engineering
 
 One of the most important components of HetEvoAgent is feature engineering.
 
@@ -243,7 +231,7 @@ These features combine meteorological, temporal, cyclic, and geographic informat
 
 ---
 
-#  Why Cyclic Features Are Used
+# Why Cyclic Features Are Used
 
 Time is naturally cyclical.
 
@@ -264,7 +252,7 @@ Sine and cosine transformations allow the model to represent cyclical relationsh
 
 ---
 
-#  AQI Prediction Model
+# AQI Prediction Model
 
 The current deployed AQI prediction model is:
 
@@ -280,7 +268,7 @@ models/
 The backend loads this model through the model service and uses it during prediction requests.
 
 ---
-#  Model Configuration
+# Model Configuration
 
 | Parameter | Value |
 |---|---:|
@@ -301,7 +289,7 @@ Gradient Boosting is suitable for this problem because AQI depends on nonlinear 
 
 ---
 
-#  Prediction Zones
+# Prediction Zones
 
 HetEvoAgent currently operates on six representative prediction zones within Chhatrapati Sambhajinagar.
 
@@ -318,29 +306,15 @@ These zones represent different urban characteristics and environmental contexts
 
 ---
 
-#  Why Zone-Based Prediction?
+# Why Zone-Based Prediction?
 
 A city-wide AQI value can hide important local differences.
 
 For example:
 
-Industrial Zone
-    ↓
-Industrial activity
-    ↓
-Different pollution pattern
-
-Commercial Zone
-    ↓
-Traffic and activity
-    ↓
-Different pollution pattern
-
-Residential Zone
-    ↓
-Different emission sources
-    ↓
-Different AQI pattern
+- Industrial Zone → Industrial activity → Different pollution pattern
+- Commercial Zone → Traffic and activity → Different pollution pattern
+- Residential Zone → Different emission sources → Different AQI pattern
 
 Therefore, HetEvoAgent treats each zone as a separate geographic context while using a common prediction pipeline.
 
@@ -348,7 +322,7 @@ Latitude, longitude, and distance-related features allow geographic information 
 
 ---
 
-#  Environmental Data Sources
+# Environmental Data Sources
 
 HetEvoAgent is designed around heterogeneous environmental data.
 
@@ -399,31 +373,19 @@ When a requested date is not available from the latest atmospheric dataset, the 
 
 ---
 
-#  Data Integration Pipeline
+# Data Integration Pipeline
 
-Ground AQI Data
-        +
-Weather Data
-        +
-Satellite Data
-        ↓
-Data Alignment
-        ↓
-Date / Station Matching
-        ↓
-Geographic Mapping
-        ↓
-Feature Engineering
-        ↓
-21 Model Features
-        ↓
-Gradient Boosting
-        ↓
-Predicted AQI
-
+Data Collection — Ground AQI, weather, and satellite data
+Data Alignment — Align datasets by date and location
+Station Matching — Match AQI observations with corresponding stations
+Geographic Mapping — Map data to the six prediction zones
+Feature Engineering — Generate relevant environmental features
+Feature Preparation — Prepare 21 model features
+AQI Prediction — Apply the Gradient Boosting model
+Output — Generate zone-wise predicted AQI
 ---
 
-#  Agent-Based Self-Evolution
+# Agent-Based Self-Evolution
 
 One of the central ideas behind HetEvoAgent is the use of an agent-based feedback mechanism.
 
@@ -441,53 +403,30 @@ Therefore:
 
 Prediction Model ≠ Entire Agent
 
-Prediction Model
-    ↓
-Generates AQI
-
-Agent Layer
-    ↓
-Evaluates prediction
-    ↓
-Calculates feedback
-    ↓
-Reward / Penalty
-    ↓
-Learning / Strategy
-    ↓
-Memory / Evolution
+- Prediction Model → Generates AQI
+- Agent Layer → Evaluates prediction → Calculates feedback → Reward / Penalty → Learning / Strategy → Memory / Evolution
 
 ---
 
-#  Self-Evolution Feedback Loop
+# Self-Evolution Feedback Loop
 
-Prediction
-    ↓
-Actual AQI becomes available
-    ↓
-Prediction vs Actual
-    ↓
-Error Evaluation
-    ↓
-Performance Evaluation
-    ↓
-Reward / Penalty
-    ↓
-Feedback Controller
-    ↓
-Learning
-    ↓
-Strategy
-    ↓
-Agent Memory
-    ↓
-Future Decision / Evolution
+1. Prediction
+2. Actual AQI becomes available
+3. Prediction vs Actual
+4. Error Evaluation
+5. Performance Evaluation
+6. Reward / Penalty
+7. Feedback Controller
+8. Learning
+9. Strategy
+10. Agent Memory
+11. Future Decision / Evolution
 
 The purpose of this architecture is to maintain feedback about prediction performance and use that information for future decision-making and evolution.
 
 ---
 
-#  Agent Components
+# Agent Components
 
 The backend contains dedicated modules for the agent-based architecture.
 
@@ -537,7 +476,7 @@ Provides integration between the agent layer and Firebase-related persistence.
 
 ---
 
-#  Prediction Evaluation
+# Prediction Evaluation
 
 The self-evolution concept depends on comparing:
 
@@ -567,7 +506,7 @@ These metrics can be used by the evaluation layer to determine prediction qualit
 
 ---
 
-#  Firebase / Firestore Integration
+# Firebase / Firestore Integration
 
 HetEvoAgent uses Firebase Firestore as a persistence layer.
 
@@ -586,40 +525,25 @@ The exact collection structure can evolve with the implementation.
 
 ---
 
-#  Backend Architecture
+# Backend Architecture
 
 The backend is built using FastAPI.
 
 The backend acts as the central communication layer between the frontend, machine-learning model, data services, external data sources, and Firebase.
 
-Frontend
-   │
-   │ REST API
-   ▼
-FastAPI
-   │
-   ├───────────────┐
-   │               │
-   ▼               ▼
-Prediction      Weather
-Service         Service
-   │
-   ▼
-Model Service
-   │
-   ▼
-Gradient Boosting Model
-   │
-   ▼
-Predicted AQI
-   │
-   ├──────────────► Firebase
-   │
-   └──────────────► Frontend
+1. Frontend
+2. REST API
+3. FastAPI
+4. Prediction Service and Weather Service
+5. Model Service
+6. Gradient Boosting Model
+7. Predicted AQI
+8. Firebase persistence
+9. Frontend response and visualization
 
 ---
 
-#  API Layer
+# API Layer
 
 The FastAPI backend exposes APIs under the /api/v1/ structure.
 
@@ -662,7 +586,7 @@ app/
 
 ---
 
-# 📍 Main Prediction API
+# Main Prediction API
 
 The prediction endpoint is:
 
@@ -688,7 +612,7 @@ The backend then:
 
 ---
 
-#  Zones API
+# Zones API
 
 The frontend communicates with:
 
@@ -706,7 +630,7 @@ longitude
 
 ---
 
-#  Health Check
+# Health Check
 
 The backend provides a health endpoint:
 
@@ -716,7 +640,7 @@ This can be used to verify whether the FastAPI backend is running.
 
 ---
 
-#  Frontend Architecture
+# Frontend Architecture
 
 The frontend is built using:
 
@@ -733,7 +657,7 @@ The frontend communicates with the FastAPI backend through REST APIs.
 
 ---
 
-#  Frontend Features
+# Frontend Features
 
 ### Live AQI Monitoring
 
@@ -761,19 +685,14 @@ Uses geographic coordinates and map components to represent prediction zones.
 
 ---
 
-#  Heatmap Visualization
+# Heatmap Visualization
 
 The system uses geographic information to visualize AQI conditions.
 
-Zone Coordinates
-      +
-Zone AQI
-      ↓
-AQI Classification
-      ↓
-Geographic Visualization
-      ↓
-Pollution Heatmap
+1. Zone Coordinates + Zone AQI
+2. AQI Classification
+3. Geographic Visualization
+4. Pollution Heatmap
 
 This makes it easier to identify:
 
@@ -785,7 +704,7 @@ This makes it easier to identify:
 
 ---
 
-#  Project Structure
+# Project Structure
 
 HetEvoAgent/
 │
@@ -850,7 +769,7 @@ HetEvoAgent/
 
 ---
 
-# 🛠️ Technology Stack
+# ️ Technology Stack
 
 ## Backend
 
@@ -885,7 +804,7 @@ HetEvoAgent/
 
 ---
 
-#  Environment Variables
+# Environment Variables
 
 Sensitive credentials must never be committed to GitHub.
 
@@ -915,7 +834,7 @@ A safe .env.example file can be committed instead.
 
 ---
 
-#  Local Development Setup
+# Local Development Setup
 
 ## 1. Prerequisites
 
@@ -1052,69 +971,42 @@ Open the frontend URL shown by Next.js.
 
 ---
 
-# 🔄 Complete Prediction Flow
+# Complete Prediction Flow
 
-User selects:
-
-Zone
-+
-Prediction Date
-        ↓
-Frontend
-        ↓
-POST /api/v1/predictions/predict
-        ↓
-FastAPI
-        ↓
-Prediction Service
-        ↓
-Weather / Environmental Data
-        ↓
-Feature Engineering
-        ↓
-21 Features
-        ↓
-Gradient Boosting Regressor
-        ↓
-Predicted AQI
-        ↓
-Firebase
-        ↓
-FastAPI Response
-        ↓
-Frontend
-        ↓
-AQI Display / Map / Insights
+1. User selects Zone and Prediction Date
+2. Frontend
+3. POST /api/v1/predictions/predict
+4. FastAPI
+5. Prediction Service
+6. Weather / Environmental Data
+7. Feature Engineering
+8. 21 Features
+9. Gradient Boosting Regressor
+10. Predicted AQI
+11. Firebase
+12. FastAPI Response
+13. Frontend
+14. AQI Display / Map / Insights
 
 ---
 
-#  Self-Evolution Flow
+# Self-Evolution Flow
 
-Prediction
-    ↓
-Actual AQI becomes available
-    ↓
-Prediction vs Actual
-    ↓
-Error Calculation
-    ↓
-Performance Evaluation
-    ↓
-Reward / Penalty
-    ↓
-Feedback Controller
-    ↓
-Learning
-    ↓
-Strategy
-    ↓
-Agent Memory
-    ↓
-Future Decision / Evolution
+1. Prediction
+2. Actual AQI becomes available
+3. Prediction vs Actual
+4. Error Calculation
+5. Performance Evaluation
+6. Reward / Penalty
+7. Feedback Controller
+8. Learning
+9. Strategy
+10. Agent Memory
+11. Future Decision / Evolution
 
 ---
 
-#  Important Model Design Decision
+# Important Model Design Decision
 
 The current trained Gradient Boosting model uses exactly these 21 inputs:
 
@@ -1142,19 +1034,16 @@ distance_km
 
 This list should remain synchronized between:
 
-Training Pipeline
-        ↓
-Feature Engineering
-        ↓
-Saved Model
-        ↓
-Backend Prediction Service
+1. Training Pipeline
+2. Feature Engineering
+3. Saved Model
+4. Backend Prediction Service
 
 Changing feature names, order, or preprocessing without retraining or updating the model can result in incorrect predictions.
 
 ---
 
-#  Model Artifact
+# Model Artifact
 
 The trained model is stored locally as:
 
@@ -1166,7 +1055,7 @@ The model file should remain synchronized with the 21-feature definition.
 
 ---
 
-#  Testing
+# Testing
 
 The backend contains testing and validation utilities under:
 
@@ -1187,31 +1076,24 @@ These utilities can be used during development to validate datasets, model behav
 
 ---
 
-#  Data Preparation
+# Data Preparation
 
 The data preparation pipeline combines relevant environmental datasets and produces structured data suitable for model development.
 
 The workflow includes:
 
-Raw Data
-   ↓
-Validation
-   ↓
-Cleaning
-   ↓
-Date Standardization
-   ↓
-Station / Zone Mapping
-   ↓
-Dataset Merging
-   ↓
-Feature Engineering
-   ↓
-Model Dataset
+1. Raw Data
+2. Validation
+3. Cleaning
+4. Date Standardization
+5. Station / Zone Mapping
+6. Dataset Merging
+7. Feature Engineering
+8. Model Dataset
 
 ---
 
-#  Frontend ↔ Backend Integration
+# Frontend ↔ Backend Integration
 
 The frontend communicates with the backend using REST APIs.
 
@@ -1231,7 +1113,7 @@ This separation keeps the frontend presentation layer independent from backend p
 
 ---
 
-# 🗄️ Data Persistence
+# ️ Data Persistence
 
 The system uses Firebase Firestore to maintain persistent information.
 
@@ -1249,7 +1131,7 @@ The exact collection structure can evolve as the backend implementation develops
 
 ---
 
-#  Design Principles
+# Design Principles
 
 ## 1. Modularity
 
@@ -1293,7 +1175,7 @@ The architecture allows future additions such as:
 
 ---
 
-#  Current Implementation vs Future Evolution
+# Current Implementation vs Future Evolution
 
 The current implementation contains:
 
@@ -1314,7 +1196,7 @@ Future versions can extend the system toward more autonomous model evolution.
 
 ---
 
-#  Limitations
+# Limitations
 
 ### Data Dependency
 
@@ -1342,7 +1224,7 @@ Some data collection and external API functionality requires network connectivit
 
 ---
 
-#  Future Scope
+# Future Scope
 
 ## 1. Advanced Autonomous Retraining
 
@@ -1406,7 +1288,7 @@ Potential contributing factors:
 
 ---
 
-#  Social & Environmental Impact
+# Social & Environmental Impact
 
 Potential applications include:
 
@@ -1423,44 +1305,33 @@ By moving from city-wide AQI toward zone-level AQI intelligence, HetEvoAgent aim
 
 ---
 
-#  Academic & Research Value
+# Academic & Research Value
 
 HetEvoAgent combines:
 
 Machine Learning
-+
-Data Engineering
-+
-Agentic AI
-+
-Feature Engineering
-+
-Geospatial Computing
-+
-Environmental Data
-+
-Backend Engineering
-+
-Frontend Engineering
-+
-Cloud Database
++ Data Engineering
++ Agentic AI
++ Feature Engineering
++ Geospatial Computing
++ Environmental Data
++ Backend Engineering
++ Frontend Engineering
++ Cloud Database
 
 The project demonstrates the application of AI and software engineering to a real-world environmental problem.
 
 ---
 
 
-#  Collaboration Model
+# Collaboration Model
 
 The project is maintained as a complete team repository containing:
 
 Backend
-+
-Frontend
-+
-Configuration
-+
-Documentation
++ Frontend
++ Configuration
++ Documentation
 
 Example branches:
 
@@ -1475,7 +1346,7 @@ Team members can contribute through separate branches and pull requests so indiv
 
 ---
 
-#  Repository Guidelines
+# Repository Guidelines
 
 Before committing code, make sure the repository does not contain:
 
@@ -1496,7 +1367,7 @@ Never commit passwords, API keys, private tokens, or Firebase service-account cr
 
 ---
 
-#  Security
+# Security
 
 HetEvoAgent uses external services that require credentials.
 
@@ -1514,7 +1385,7 @@ Actual credentials must remain outside version control.
 
 ---
 
-#  Documentation
+# Documentation
 
 Recommended documentation structure:
 
@@ -1541,7 +1412,7 @@ The README provides the high-level technical overview, while detailed documents 
 
 ---
 
-#  Quick Start
+# Quick Start
 
 ## Backend
 
@@ -1571,7 +1442,7 @@ Then open the frontend URL shown by Next.js.
 
 ---
 
-#  Example Development Workflow
+# Example Development Workflow
 
 1. Collect Data
 2. Validate Data
@@ -1588,7 +1459,7 @@ Then open the frontend URL shown by Next.js.
 
 ---
 
-#  Conclusion
+# Conclusion
 
 HetEvoAgent is a hyper-local AQI prediction platform designed for Chhatrapati Sambhajinagar.
 
@@ -1602,7 +1473,7 @@ The long-term vision is to evolve HetEvoAgent into a more autonomous environment
 
 ---
 
-#  Vision
+# Vision
 
 > From city-wide AQI monitoring to intelligent, hyper-local environmental prediction.
 
@@ -1610,7 +1481,7 @@ HetEvoAgent aims to demonstrate how modern AI, machine learning, data engineerin
 
 ---
 
-#  Project Status
+# Project Status
 
 Status: Active Development
 
